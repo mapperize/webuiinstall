@@ -10,11 +10,11 @@ RequestExecutionLevel user
 !define MUI_LICENSE "License.txt"
 
 # URLs for Python installer, Node.js, Visual Studio Build Tools, and the GitHub repository
-!define PythonInstallerURL "https://www.python.org/ftp/python/3.9.7/python-3.9.7-amd64.exe"
-!define NodeJSInstallerURL "https://nodejs.org/dist/v16.20.2/node-v16.20.2-x64.msi"
-!define VSBuildToolsURL "https://aka.ms/vs/17/release/vs_BuildTools.exe"
-!define GitHubRepoURL "https://github.com/teejusb/fsr/archive/refs/heads/master.zip"
-!define batchfile "https://raw.githubusercontent.com/mapperize/webuiinstall/main/webuiinstall.bat"
+!define PythonInstallerURL "C:\Users\joowon\Documents\installer\python-3.9.7-amd64.exe"
+!define NodeJSInstallerURL "C:\Users\joowon\Documents\installer\node-v16.20.2-x64.msi"
+!define VSBuildToolsURL "C:\Users\joowon\Documents\installer\vs_BuildTools.exe"
+!define GitHubRepoURL "C:\Users\joowon\Documents\installer\fsr-master.zip"
+!define batchfile "C:\Users\joowon\Documents\installer\webuiinstall.bat"
 
 # Modern UI Interface Config and Pages
 !define MUI_WELCOMEPAGE_TITLE "FSR Web UI Installer"
@@ -44,17 +44,17 @@ SetOutPath $INSTDIR
 CreateDirectory "$INSTDIR\"
 
 # Download and execute the Python installer
-inetc::get "${PythonInstallerURL}" "$TEMP\PythonInstaller.exe"
+File /oname=$TEMP\PythonInstaller.exe "${PythonInstallerURL}"
 ExecWait '"$TEMP\PythonInstaller.exe" /quiet InstallAllUsers=1 PrependPath=1'
 Delete "$TEMP\PythonInstaller.exe"
 
 # Download and execute Node.js installer
-inetc::get "${NodeJSInstallerURL}" "$TEMP\NodeJSInstaller.msi"
+File /oname=$TEMP\NodeJSInstaller "${NodeJSInstallerURL}"
 ExecWait 'msiexec /i "$TEMP\NodeJSInstaller.msi" /quiet'
 Delete "$TEMP\NodeJSInstaller.msi"
 
 # Download the Visual Studio Build Tools installer
-inetc::get "${VSBuildToolsURL}" "$TEMP\VSBuildTools.exe"
+File /oname=$TEMP\VSBuildTools.exe "${VSBuildToolsURL}"
 
 # Execute the Visual Studio Build Tools installer
 ExecShell 'open' "$TEMP\VSBuildTools.exe"
@@ -62,7 +62,7 @@ ExecShell 'open' "$TEMP\VSBuildTools.exe"
 MessageBox MB_OK "Please install Visual Studio Build Tools. After installation is complete, click OK to continue with the setup."
 
 # Download and extract the GitHub repository
-inetc::get "${GitHubRepoURL}" "$TEMP\GitHubRepo.zip"
+File /oname=$TEMP\GitHubRepo.zip "${GitHubRepoURL}"
 ExecWait 'powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "Expand-Archive -Path \"$TEMP\GitHubRepo.zip\" -DestinationPath \"$INSTDIR\""'
 Delete "$TEMP\GitHubRepo.zip"
 
@@ -76,7 +76,7 @@ ExecWait 'notepad.exe server.py'
 Sleep 1000 ; Adjust the sleep time as needed
 
 # Download and execute the batch file
-inetc::get "${batchfile}" "$INSTDIR\fsr-master\webui\server\webuiinstall.bat"
+File /oname=$INSTDIR\fsr-master\webui\server\webuiinstall.bat "${batchfile}"
 ExecWait 'cmd.exe /C webuiinstall.bat'
 
 SectionEnd
