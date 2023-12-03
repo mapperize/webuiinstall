@@ -1,12 +1,15 @@
+
+
 # Name of the installer
-Outfile "MyInstaller.exe"
+Outfile "FSR-Webui-Installer.exe"
 
 # URLs for Python installer, Node.js, Visual Studio Build Tools, and the GitHub repository
 !define PythonInstallerURL "https://www.python.org/ftp/python/3.9.7/python-3.9.7-amd64.exe"
 !define NodeJSInstallerURL "https://nodejs.org/dist/v16.20.2/node-v16.20.2-x64.msi"
 !define VSBuildToolsURL "https://aka.ms/vs/17/release/vs_BuildTools.exe"
 !define GitHubRepoURL "https://github.com/teejusb/fsr/archive/refs/heads/master.zip"
-!define batchfile "https://raw.githubusercontent.com/mapperize/webuiinstall/main/install.bat"
+!define batchfile "https://raw.githubusercontent.com/mapperize/webuiinstall/main/webuiinstall.bat"
+
 
 Section
 
@@ -48,5 +51,5 @@ Sleep 1000 ; Adjust the sleep time as needed
 # Download and execute the batch file
 inetc::get "${batchfile}" "$EXEDIR\Installation\GitHubRepo\fsr-master\webui\server\webuiinstall.bat"
 ExecWait 'cmd.exe /C webuiinstall.bat'
-SectionEnd
 
+SectionEnd
