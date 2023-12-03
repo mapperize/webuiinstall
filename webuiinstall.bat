@@ -48,7 +48,7 @@ REM Redirect output to a log file
     REM Create start-webui.bat in the current directory
     echo @echo off > "start-webui.bat"
     echo start "" http://localhost:5000/ >> "start-webui.bat"
-    echo cd "webui" >> "start-webui.bat"
+    echo cd "%~dp0" >> "start-webui.bat"
     echo yarn start-api >> "start-webui.bat"
     echo Start-webui.bat created.
 
