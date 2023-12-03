@@ -44,14 +44,14 @@ REM Redirect output to a log file
     echo Yarn build complete.
 
     echo.
-    echo Running yarn start-api...
-    REM Run yarn start-api
-    yarn start-api
-    echo Yarn start-api complete.
+    echo Creating start-webui.bat in the current directory...
+    REM Create start-webui.bat in the current directory
+    echo @echo off > "start-webui.bat"
+    echo start "" http://localhost:5000/ >> "start-webui.bat"
+    echo cd "webui" >> "start-webui.bat"
+    echo yarn start-api >> "start-webui.bat"
+    echo Start-webui.bat created.
 
     echo.
     echo Script execution complete.
 )
-
-REM Keep the Command Prompt window open
-pause
